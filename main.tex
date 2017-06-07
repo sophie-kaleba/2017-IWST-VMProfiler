@@ -1,0 +1,270 @@
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%\documentclass[runningheads]{llncs}
+%\documentclass[12pt,letterpaper]{article}
+%\documentclass[preprint,12pt]{elsarticle}
+%\documentclass{sig-alternate}
+\documentclass[10pt,reprint]{sigplanconf}
+
+% https://avandeursen.com/2013/07/10/research-paper-writing-recommendations/
+
+
+% packages
+\usepackage{xspace}
+\usepackage{ifthen}
+\usepackage{amsbsy}
+\usepackage{amssymb}
+\usepackage{balance}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{needspace}
+\usepackage{microtype}
+\usepackage{bold-extra}
+\usepackage{subfig}
+\usepackage{wrapfig}
+\usepackage{balance}
+\balance
+
+% constants
+% \newcommand{\Title}{Toward Reducing Waste of Expandable Collections: The Pharo Case}
+\newcommand{\Title}{INSERT HERE A NICE TITLE}
+%\newcommand{\Title}{The Dark Side of Expandable Collections: The Pharo Case}
+\newcommand{\TitleShort}{\Title}
+%\newcommand{\Authors}{~~~~}
+\newcommand{\Authors}{Sophie, Clement, Alexandre Bergel$^3$\\[2 ex]
+$^3$Pleiad Lab, DCC, University of Chile}
+\newcommand{\AuthorsShort}{}
+%\newcommand{\Authors}{Alexandre Bergel, Vanessa Pe\~na}
+%\newcommand{\AuthorsShort}{A. Bergel, V. Pe\~na}
+
+% references
+%    IEEE camera ready cannot have a bookmark
+%\usepackage[colorlinks,bookmarks=false]{hyperref}
+\usepackage[colorlinks]{hyperref}
+\usepackage[all]{hypcap}
+\setcounter{tocdepth}{2}
+\hypersetup{
+	colorlinks=true,
+	urlcolor=black,
+	linkcolor=black,
+	citecolor=black,
+	plainpages=false,
+	bookmarksopen=true,
+	pdfauthor={\Authors},
+	pdftitle={\Title}}
+
+\def\chapterautorefname{Chapter}
+\def\appendixautorefname{Appendix}
+\def\sectionautorefname{Section}
+\def\subsectionautorefname{Section}
+\def\figureautorefname{Figure}
+\def\tableautorefname{Table}
+\def\listingautorefname{Listing}
+
+% source code
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{listings}
+\definecolor{source}{gray}{0.9}
+\lstset{
+	language={},
+	% characters
+	tabsize=3,
+	upquote=true,
+	escapechar={!},
+	keepspaces=true,
+	breaklines=true,
+	alsoletter={\#:},
+	breakautoindent=true,
+	columns=fullflexible,
+	showstringspaces=false,
+	basicstyle=\footnotesize\sffamily,
+	% background
+	frame=single,
+    framerule=0pt,
+	backgroundcolor=\color{source},
+	% numbering
+	numbersep=5pt,
+	numberstyle=\tiny,
+	numberfirstline=true,
+	% captioning
+	captionpos=b,
+	% formatting (html)
+	moredelim=[is][\textbf]{<b>}{</b>},
+	moredelim=[is][\textit]{<i>}{</i>},
+	moredelim=[is][\color{red}\uwave]{<u>}{</u>},
+	moredelim=[is][\color{red}\sout]{<del>}{</del>},
+	moredelim=[is][\color{blue}\underline]{<ins>}{</ins>}}
+\newcommand{\ct}{\lstinline[backgroundcolor=\color{white},basicstyle=\footnotesize\ttfamily]}
+\newcommand{\lct}[1]{{\small\tt #1}}
+
+% tikz
+% \usepackage{tikz}
+% \usetikzlibrary{matrix}
+% \usetikzlibrary{arrows}
+% \usetikzlibrary{external}
+% \usetikzlibrary{positioning}
+% \usetikzlibrary{shapes.multipart}
+% 
+% \tikzset{
+% 	every picture/.style={semithick},
+% 	every text node part/.style={align=center}}
+
+% proof-reading
+\usepackage{xcolor}
+\usepackage[normalem]{ulem}
+\newcommand{\ra}{$\rightarrow$}
+\newcommand{\ugh}[1]{\textcolor{red}{\uwave{#1}}} % please rephrase
+\newcommand{\ins}[1]{\textcolor{blue}{\uline{#1}}} % please insert
+\newcommand{\del}[1]{\textcolor{red}{\sout{#1}}} % please delete
+\newcommand{\chg}[2]{\textcolor{red}{\sout{#1}}{\ra}\textcolor{blue}{\uline{#2}}} % please change
+\newcommand{\chk}[1]{\textcolor{ForestGreen}{#1}} % changed, please check
+
+% comments \nb{label}{color}{text}
+\newboolean{showcomments}
+\setboolean{showcomments}{true}
+\ifthenelse{\boolean{showcomments}}
+	{\newcommand{\nb}[3]{
+		{\colorbox{#2}{\bfseries\sffamily\scriptsize\textcolor{white}{#1}}}
+		{\textcolor{#2}{\sf\small$\blacktriangleright$\textit{#3}$\blacktriangleleft$}}}
+	 \newcommand{\version}{\emph{\scriptsize$-$Id$-$}}}
+	{\newcommand{\nb}[3]{}
+	 \newcommand{\version}{}}
+\newcommand{\rev}[2]{\nb{Reviewer #1}{red}{#2}}
+\newcommand{\ab}[1]{\nb{Alexandre}{blue}{#1}}
+\newcommand{\lr}[1]{\nb{Lukas}{pink}{#1}}
+\newcommand{\ai}[1]{\nb{Alejandro}{orange}{#1}}
+\newcommand{\on}[1]{\nb{Oscar}{olive}{#1}}
+
+% graphics: \fig{position}{percentage-width}{filename}{caption}
+\DeclareGraphicsExtensions{.png,.jpg,.pdf,.eps,.gif}
+\graphicspath{{figures/}}
+\newcommand{\fig}[4]{
+	\begin{figure}[#1]
+		\centering
+		\includegraphics[width=#2\textwidth]{#3}
+		\caption{\label{fig:#3}#4}
+	\end{figure}}
+
+\newcommand{\largefig}[4]{
+	\begin{figure*}[#1]
+		\centering
+		\includegraphics[width=#2\textwidth]{#3}
+		\caption{\label{fig:#3}#4}
+	\end{figure*}}
+	
+\newcommand{\wrapfig}[5]{	
+\begin{wrapfigure}{#1}{#2\textwidth}
+  \begin{center}
+    \includegraphics[width=#3\textwidth]{#4}
+  \end{center}
+  \caption{\label{fig:#4}#5}
+\end{wrapfigure}}
+
+% abbreviations
+\newcommand{\ie}{\emph{i.e.,}\xspace}
+\newcommand{\eg}{\emph{e.g.,}\xspace}
+\newcommand{\etc}{\emph{etc.}\xspace}
+\newcommand{\etal}{\emph{et al.}\xspace}
+
+% lists
+\newenvironment{bullets}[0]
+	{\begin{itemize}}
+	{\end{itemize}}
+
+\newcommand{\seclabel}[1]{\label{sec:#1}}
+\newcommand{\figlabel}[1]{\label{fig:#1}}
+\newcommand{\tablabel}[1]{\label{tab:#1}}
+\newcommand{\figref}[1]{Figure~\ref{fig:#1}}
+\newcommand{\secref}[1]{Section~\ref{sec:#1}}
+
+
+%Specialized macros
+\pagenumbering{arabic}
+\DeclareCaptionType{copyrightbox}
+\newcommand{\myparagraph}[1]{\vspace{0.1cm}\noindent \textbf{\textit{#1.}}}
+%\journal{Science of Computer Programming}
+
+% \makeatletter
+% \let\@copyrightspace\relax
+% \makeatother
+% 
+
+%double spaced
+%\renewcommand{\baselinestretch}{1.5}
+
+\begin{document}
+
+\special{papersize=8.5in,11in}
+\setlength{\pdfpageheight}{\paperheight}
+\setlength{\pdfpagewidth}{\paperwidth}
+
+\conferenceinfo{OOPSLA '14}{Month d--d, 20yy, City, ST, Country}
+\copyrightyear{2014}
+\copyrightdata{978-1-nnnn-nnnn-n/yy/mm}
+\doi{nnnnnnn.nnnnnnn}
+
+
+%\begin{frontmatter}
+\title{\Title}
+
+
+\authorinfo{Sophie$^1$, Clement$^1$, Alexandre Bergel$^2$}
+           {$^1$INRIA\\
+             $^2$Pleiad Lab, DCC, University of Chile}
+           {}
+%\author{\Authors
+%}
+
+
+%\institute{~~}
+%\institute{Pleiad Lab, University of Chile}
+\maketitle
+
+\begin{abstract}
+% What is the problem
+% Why is the problem a problem
+
+% What is the surprise
+% What are the consequences
+\end{abstract}
+
+%\begin{keyword}
+%% keywords here, in the form: keyword \sep keyword
+
+%% MSC codes here, in the form: \MSC code \sep code
+%% or \MSC[2008] code \sep code (2000 is the default)
+
+%\end{keyword}
+
+%\end{frontmatter}
+%: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\section{Introduction}
+
+
+%: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\section{Related Work}\seclabel{relatedWork}
+
+
+%: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\section{Conclusion and Future Work}\seclabel{conclusion}
+
+%{\footnotesize \myparagraph{Acknowledgments} We thank 
+%Oscar Nierstrasz, 
+%Lukas Renggli,
+%Eric Tanter, and 
+%Renato Cerro 
+%for their comments on an early draft of this paper. We also thank Aleksandar Prokopec for his help with Scala collections.}
+%: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+%{\small
+\bibliographystyle{elsarticle-num}
+\bibliography{scg}
+%\bibliography{hapao}
+%}
+
+
+%\appendix 
+\end{document}
+
