@@ -27,11 +27,11 @@
 
 % constants
 % \newcommand{\Title}{Toward Reducing Waste of Expandable Collections: The Pharo Case}
-\newcommand{\Title}{INSERT HERE A NICE TITLE}
+\newcommand{\Title}{Enhancing the VM Profiler}
 %\newcommand{\Title}{The Dark Side of Expandable Collections: The Pharo Case}
 \newcommand{\TitleShort}{\Title}
 %\newcommand{\Authors}{~~~~}
-\newcommand{\Authors}{Sophie, Clement, Alexandre Bergel$^3$\\[2 ex]
+\newcommand{\Authors}{Sophie Kaleba, Clément Béra, Alexandre Bergel$^3$\\[2 ex]
 $^3$Pleiad Lab, DCC, University of Chile}
 \newcommand{\AuthorsShort}{}
 %\newcommand{\Authors}{Alexandre Bergel, Vanessa Pe\~na}
@@ -209,9 +209,9 @@ $^3$Pleiad Lab, DCC, University of Chile}
 \title{\Title}
 
 
-\authorinfo{Sophie$^1$, Clement$^1$, Alexandre Bergel$^2$}
-           {$^1$INRIA\\
-             $^2$Pleiad Lab, DCC, University of Chile}
+\authorinfo{Sophie Kaleba$^1$, Clement Bera$^1$, Alexandre Bergel$^2$}
+           {$^1$INRIA- Lille Nord Europe, France\\
+             $^2$Pleiad Lab, DCC, University of Chile, Santiago, Chile}
            {}
 %\author{\Authors
 %}
@@ -222,6 +222,11 @@ $^3$Pleiad Lab, DCC, University of Chile}
 \maketitle
 
 \begin{abstract}
+Code profiling is critical when it comes to improve the performance of your applications. This applies of course for Smalltalk applications and a lot of different profiling tools are already available, such as MessageTally, GadgetProfiler, VMProfiler. The last one can especially provide significant data to help you tune the virtual machine (VM) settings for performance.
+However, this VM profiler is only available on Squeak. [nécessaire? : This is getting critical as the number of Pharo users is growing]. Besides, new optimisations are added to the Just-In-Time (JIT) compiler, that could compromise the relevance of the data provided by this profiler. 
+
+In this paper, we discuss these two problems and then we introduce the VM profiler for Pharo and the solution proposed to keep collecting relevant profiling data despite the enhancements of the JIT.
+
 % What is the problem
 % Why is the problem a problem
 
@@ -242,6 +247,18 @@ $^3$Pleiad Lab, DCC, University of Chile}
 
 \section{Introduction}
 
+
+%: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\section{Problem}
+
+%: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\section{Solution}
+
+%: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\section{Evaluation/Validation}
 
 %: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 \section{Related Work}\seclabel{relatedWork}
