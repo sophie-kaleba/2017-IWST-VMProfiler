@@ -317,9 +317,18 @@ Each function (indifferently, a native function or a C function) is represented 
  
  
  \paragraph{Primitive Cog Constituents.}
- + primitive CogConstituents mettre ce qu'elle renvoie avec un exemple
- 
- + figure for exemple.
+The primitiveCollectCogCodeConstituents provides the VM profiler with the description of the native functions currently present in the machine code zone it needs. 
+This primitive answers an array of pair-wise elements as shown in \figref{fig:contentsOfCollectCogCodePrim}. The first element of the pair is the name of the native function, the second one is its starting address in the code zone.
+It is typically called once the profiling has stopped and the samples has been gathered : the data provided will be mapped with the samples collected.
+
+ \begin{figure}[!htp]
+     \begin{center}
+         \includegraphics[width=0.4\linewidth]{contentsOfCollectCogCodePrim}
+         \caption{Cog constituents as answered by the primitive}
+         \figlabel{fig:contentsOfCollectCogCodePrim}
+     \end{center}
+ \end{figure}
+
  
 \subsection{Debugger mapping}
 
