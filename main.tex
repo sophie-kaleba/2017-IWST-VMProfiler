@@ -3,7 +3,7 @@
 %\documentclass[12pt,letterpaper]{article}
 %\documentclass[preprint,12pt]{elsarticle}
 %\documentclass{sig-alternate}
-\documentclass[10pt,reprint]{sigplanconf}
+\documentclass[10pt,preprint]{sigplanconf}
 
 % https://avandeursen.com/2013/07/10/research-paper-writing-recommendations/
 
@@ -14,6 +14,7 @@
 \usepackage{amsbsy}
 \usepackage{amssymb}
 \usepackage{balance}
+\usepackage{alltt} 
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{multirow}
@@ -23,35 +24,13 @@
 \usepackage{subfig}
 \usepackage{wrapfig}
 \usepackage{balance}
-\balance
-
-% constants
-% \newcommand{\Title}{Toward Reducing Waste of Expandable Collections: The Pharo Case}
-\newcommand{\Title}{Enhancing the VM Profiler}
-%\newcommand{\Title}{The Dark Side of Expandable Collections: The Pharo Case}
-\newcommand{\TitleShort}{\Title}
-%\newcommand{\Authors}{~~~~}
-\newcommand{\Authors}{Sophie Kaleba, Clément Béra, Alexandre Bergel$^3$\\[2 ex]
-$^3$Pleiad Lab, DCC, University of Chile}
-\newcommand{\AuthorsShort}{}
-%\newcommand{\Authors}{Alexandre Bergel, Vanessa Pe\~na}
-%\newcommand{\AuthorsShort}{A. Bergel, V. Pe\~na}
-
-% references
-%    IEEE camera ready cannot have a bookmark
-%\usepackage[colorlinks,bookmarks=false]{hyperref}
 \usepackage[colorlinks]{hyperref}
 \usepackage[all]{hypcap}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{listings}
+\definecolor{source}{gray}{0.9}
 \setcounter{tocdepth}{2}
-\hypersetup{
-	colorlinks=true,
-	urlcolor=black,
-	linkcolor=black,
-	citecolor=black,
-	plainpages=false,
-	bookmarksopen=true,
-	pdfauthor={\Authors},
-	pdftitle={\Title}}
 
 \def\chapterautorefname{Chapter}
 \def\appendixautorefname{Appendix}
@@ -61,11 +40,6 @@ $^3$Pleiad Lab, DCC, University of Chile}
 \def\tableautorefname{Table}
 \def\listingautorefname{Listing}
 
-% source code
-\usepackage{xcolor}
-\usepackage{textcomp}
-\usepackage{listings}
-\definecolor{source}{gray}{0.9}
 \lstset{
 	language={},
 	% characters
@@ -98,18 +72,6 @@ $^3$Pleiad Lab, DCC, University of Chile}
 \newcommand{\ct}{\lstinline[backgroundcolor=\color{white},basicstyle=\footnotesize\ttfamily]}
 \newcommand{\lct}[1]{{\small\tt #1}}
 
-% tikz
-% \usepackage{tikz}
-% \usetikzlibrary{matrix}
-% \usetikzlibrary{arrows}
-% \usetikzlibrary{external}
-% \usetikzlibrary{positioning}
-% \usetikzlibrary{shapes.multipart}
-% 
-% \tikzset{
-% 	every picture/.style={semithick},
-% 	every text node part/.style={align=center}}
-
 % proof-reading
 \usepackage{xcolor}
 \usepackage[normalem]{ulem}
@@ -135,6 +97,7 @@ $^3$Pleiad Lab, DCC, University of Chile}
 \newcommand{\lr}[1]{\nb{Lukas}{pink}{#1}}
 \newcommand{\ai}[1]{\nb{Alejandro}{orange}{#1}}
 \newcommand{\on}[1]{\nb{Oscar}{olive}{#1}}
+
 
 % graphics: \fig{position}{percentage-width}{filename}{caption}
 \DeclareGraphicsExtensions{.png,.jpg,.pdf,.eps,.gif}
@@ -183,6 +146,38 @@ $^3$Pleiad Lab, DCC, University of Chile}
 \pagenumbering{arabic}
 \DeclareCaptionType{copyrightbox}
 \newcommand{\myparagraph}[1]{\vspace{0.1cm}\noindent \textbf{\textit{#1.}}}
+
+
+
+\balance
+
+% constants
+% \newcommand{\Title}{Toward Reducing Waste of Expandable Collections: The Pharo Case}
+\newcommand{\Title}{Accurate VM profiler for the Cog VM}
+%\newcommand{\Title}{The Dark Side of Expandable Collections: The Pharo Case}
+\newcommand{\TitleShort}{\Title}
+%\newcommand{\Authors}{~~~~}
+\newcommand{\Authors}{Sophie Kaleba, Cl\'ement B\'era, Alexandre Bergel$^3$\\[2 ex]
+$^3$Pleiad Lab, DCC, University of Chile}
+\newcommand{\AuthorsShort}{}
+
+\hypersetup{
+	colorlinks=true,
+	urlcolor=black,
+	linkcolor=black,
+	citecolor=black,
+	plainpages=false,
+	bookmarksopen=true,
+	pdfauthor={\Authors},
+	pdftitle={\Title}}
+	
+\newenvironment{code}
+    {\begin{alltt}\sffamily}
+    {\end{alltt}\normalsize}	
+	
+%\newcommand{\Authors}{Alexandre Bergel, Vanessa Pe\~na}
+%\newcommand{\AuthorsShort}{A. Bergel, V. Pe\~na}
+
 %\journal{Science of Computer Programming}
 
 % \makeatletter
@@ -209,7 +204,7 @@ $^3$Pleiad Lab, DCC, University of Chile}
 \title{\Title}
 
 
-\authorinfo{Sophie Kaleba$^1$, Clement Bera$^1$, Alexandre Bergel$^2$}
+\authorinfo{Sophie Kaleba$^1$, Cl\'ement B\'era$^1$, Alexandre Bergel$^2$}
            {$^1$INRIA- Lille Nord Europe, France\\
              $^2$Pleiad Lab, DCC, University of Chile, Santiago, Chile}
            {}
@@ -246,6 +241,23 @@ In this paper, we discuss these two problems and then we introduce the VM profil
 %: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
 \section{Introduction}
+
+%TEMPLATE:
+%
+%Context
+%
+%Problem
+%
+%Known tracks for \sd{solutions}
+%	here you want to show that you are not an idiot not knowing what have been around
+%
+%What our solution is \ct{Set} and \ct{OrderedCollection} (so that the reader knows where the paper is going)
+%
+%Contribution of the paper
+%
+%Paper structure
+
+
 %context
 %main challenge in general and thus for VMs : performance
 
@@ -254,15 +266,15 @@ In this paper, we discuss these two problems and then we introduce the VM profil
 This applies of course to virtualised environments : assuring the performance of the virtual machine (VM) is critical when you aim for overall good performances. These performances can be assessed by metrics such as bytecodes-per-second and sends-per-second [reference : Modern Problems for the Smalltalk VM] 
 
 %Cog - what is it, what are its major features. \textbf{[references]}
-Cog is a virtual machine designed for Smalltaltk, and currently used for various Smalltalk-based languages such as Pharo or Squeak. It features (what exactly? JIT, optimisations such as inline-caching...?) [reference - article about the features of cog?]
+Cog~\cite{Mira08a} is a virtual machine designed for Smalltaltk, and currently used for various Smalltalk-based languages such as Pharo~\cite{Blac09a} or Squeak~\cite{Blac07a}. It features (what exactly? JIT, optimisations such as inline-caching...?) [reference - article about the features of cog?]
 Aiming for performance, it is crucial to know where the time is spent in the VM during execution : indeed, it helps identifying hotspots and where to tune the VM settings to actually get better results.
 
 These critical informations can be collected by profiling code, to get a precise idea of the program behaviour. Such profiling tools are already available in Smalltalk, like MessageTally and VMProfiler : they provide statistical/graphical reports, showing the methods in which most of the execution time is spent, and how much of this time is spent in garbage collection \textbf{[reference needed]}. However, the VM profiler, unlike MessageTally, provides statistical data about the time spent in the VM, ie. time spent in the JIT-generated methods, and in the GC and interpreter.\\
 
 % problem 
-Right now, the VM profiler cannot track down precisely where the time is spent when executing the code generated by the JIT. It can track down in which methods the time is spent, but it cannot track down in which part of those methods the time is spent. For example, let’s say there is a frequently used method with multiple loops. The VM profiler can tell us that most of the time is spent in this method (it is indeed frequently used), but it cannot tell in which loop the time is spent.
+Right now, the VM profiler cannot track down precisely where the time is spent when executing the code generated by the JIT. It can track down in which methods the time is spent, but it cannot track down in which part of those methods the time is spent. For example, let�'s say there is a frequently used method with multiple loops. The VM profiler can tell us that most of the time is spent in this method (it is indeed frequently used), but it cannot tell in which loop the time is spent.
 
-This problem is more and more significant as new optimisations are added to the JIT \textbf{[reference needed]}. The development branch of the JIT now features speculative inlining. In this context, the JIT generates a single machine code method for multiple bytecode methods (the method optimised and the inlined methods). The VM profiler shows that most of the time is spent in optimised code, but it is currently not possible to know in which inlined method most of the time is spent. So while we get a faster and more performant VM, we lose the ability to profile it in a relevant way.\\
+This problem is more and more significant as new optimisations are added to the JIT, based on the work of H\"olzle and Ungar~\cite{Holz94a}. The development branch of the JIT now features speculative inlining. In this context, the JIT generates a single machine code method for multiple bytecode methods (the method optimised and the inlined methods). The VM profiler shows that most of the time is spent in optimised code, but it is currently not possible to know in which inlined method most of the time is spent. So while we get a faster and more performant VM, we lose the ability to profile it in a relevant way.\\
 
 %solution
 To get relevant profiling data again, we have to tweak the VM profiler so it shows where specifically the time is spent in a method. After porting the profiler to Pharo \textbf{[justifier avant pourquoi Pharo? ou juste retirer cette partie]}, we use an API usually used for debugging, that maps machine code pc to bytecode pc. This way, we can tell for each method appearing in the report in which bytecode range most time is spent.
@@ -270,61 +282,171 @@ To get relevant profiling data again, we have to tweak the VM profiler so it sho
 
 %: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
-\section{Problem}
+\section{Accurate profiling of jitted code}
 
-%context/background 
-*intro about the profilers in general : 
-aim =required for performance, to know where you need to optimise (identifying hotspots)
-2 (maybe more) major kinds of profiler : sampling and instrumenting. 
-then a quick pros and cons [reference?]	
-	
-*profiling in Pharo-Smalltalk
-In Squeak, 2 (?) profiling tools are available in the image: MessageTally and VM profiler. Both are sampling profilers, but they are not used for the same purpose. MessageTally = image side, VM profiler = vm side.
-As we are focused on where the time is spent on the VM-side, let's focus on the VM Profiler :
-It is cadenced at 1.3GHz tracking down where the time is spent in the C code of the VM (for the interpreter and the GC) and in the machine code zone (for the code generated by the JIT).
-\textbf{(figure très simple sur la cog memory ...?)}
-The profiling consists first in gathering samples, ie. instruction pointers, referring to the currently executed function, and then in mapping these samples with the symbols (functions) part of the VM and the external modules it uses. 
-\textbf{(figure - focus sur le mapping ? functionSymbol --> sampleBag --> report)}
+This section first defines the terminology used in the paper, then describes the existing VM profiler available in the Cog VM clients such as Squeak or Pharo and lastly states the problem analysed in the rest of the paper.
 
-Besides computing the time spent in the machine code zone, the profiler computes as well the time spent in the C code of the VM and provides data about the memory usage and the different events occurring during the profiling. All the results are available as a statistical report 
+\subsection{Terminology}
 
-	
-%problem
-*problem : cog optimisations and (pharo) customer requests (talk about the customer request Clément had that needed a vm profiler in Pharo ), that first require to profile on vm-side on Pharo and then, to get precise profiling data to be able to tune vm settings for performance. 
-To address this problem, we propose an implementation that take advantage of an API used for debugging, to map machine code pc to bytecode pc, to be able to tell in which bytecode range the time is spent in a method.
+\paragraph{Function.} In the paper, we use the term \emph{function} to discuss about executable code, in our case, method or block closures.
 
-*use case
+\paragraph{Bytecode function.} The term \emph{bytecode function} is used to talk specifically about the compiled function in the form of bytecode, for example, instances of \ct{CompiledMethod} in the case of methods. Bytecode functions are regular objects accessible from the Squeak/Pharo runtime and are present in the heap with all other objects.
 
-(figure : part of a profiling report showing that case of a similar one ?)
+\paragraph{Native function.} We use the term \emph{native function} to discuss about the representation of a function generated by Cog's JIT, which includes the native code. Native functions are not regular objects and are allocated in a specific memory zone (called the \emph{machine code zone}, which is executable.
 
+\subsection{Existing VM profiler}
+
+A VM profiler has been available for almost a decade in Squeak and has been recently ported to Pharo. The VM profiler allows to track down where the time is spent in the VM when executing a specific portion of code. The VM profiler computes where the time is spent in the compiled C code of the VM, in the VM plugins and in the native functions. All the results are available as a statistical report. A typical report includes two main sections, the time spent in generated code, \ie in native functions and the time spent in the compiled C code. The time spent in the compiled C code includes the time spent in the bytecode interpreter, in the garbage collector and in the just-in-time compiler. 
+
+%MAYBE -- memory representation of the Cog execution.
+
+\paragraph{Implementation.} Implementation-wise, the VM profiler is a sampling profiler. When profiling is started, a separate high-priority OS thread is started and collect the instruction pointers of the VM OS thread in a large circular buffer at a cadence of 1.3GHz. Once profiling stops, a primitive method is available to gather the samples from the VM into a Bitmap. To understand to which functions the samples correspond to, the VM profiler requests:
+\begin{itemize}
+	\item The symbol table of the VM executable and all external plugins.
+	\item A description of the native functions currently present in the machine code zone
+\end{itemize}
+Each function (indifferently, a native function or a C function) is represented as a function symbol (the name of the function, either the Smalltalk function name with the method class and the selector or the C function symbol), a start address and the last address. The VM profiler uses these ranges to find out in which function each sample is, as shown in \figref{fig:OriginalMapping}. Then, the profiler generates a report, either in the form of a string or through a user interface.
+
+ \begin{figure}[!htp]
+     \begin{center}
+         \includegraphics[width=0.9\linewidth]{OriginalMapping}
+         \caption{Mapping in original code}
+         \figlabel{fig:OriginalMapping}
+     \end{center}
+ \end{figure}
+ 
+ 
+ \paragraph{Primitive Cog Constituents.}
+ + primitive CogConstituents mettre ce qu'elle renvoie avec un exemple
+ 
+ + figure for exemple.
+ 
+\subsection{Debugger mapping}
+
+To be able to debug native function as if they were executed as a bytecode function by the bytecode interpreter, when Cog's JIT generates a native function for a given bytecode function, it generates a list of annotations~\cite{Ber16d} allowing to reconstruct the interpreter state of the function activation at any point where the code execution can be interrupted (message sends, conditional branch or back jumps). Each annotation includes a mapping between the pc in the machine code and the pc in the bytecode of the method. The VM is able to use these annotations to reify function activation and provide it in Squeak/Pharo.
+ 
+\subsection{Problem statement}
+
+The VM development is currently working on the implementation of an optimising Just-in-time compiler for the Cog VM, with optimisations such as speculative inlining, as described in the work of H\"olzle and Ungar~\cite{Holz94a}, in a similar way to production VMs such as Java's hotspot VM\footnote{The hotspot VM is the default virtual machine for Java.}~~\cite{Pale01a} and Javascript's V8 engine\footnote{V8 is mostly used as the Javascript engine for Google Chrome and NodeJS.}~\cite{V8}. The optimising is planned as a bytecode functions to bytecode functions runtime optimising compiler, re-using the existing Just-in-time compiler as a back-end to generate native functions. In this context, optimised functions are present in the form of bytecode functions, using the extended bytecode set described in the work of B\'era \etal~\cite{Bera14a}. When profiling optimised code for benchmarks such as the Games benchmark~\cite{GameBenchs}, the VM profiler now shows that all the time is spent in a single bytecode function (the bytecode function where the rest of the functions used by the benchmark are inlined). To improve performance and tune the optimising JIT, the VM development team requires more information about where the time is spent in optimised function, for example, in which range of bytecodes the time is spent.
+
+\emph{How to provide accurate profiling information in large native functions profiled ?}
+
+To address this problem, we propose an implementation that take advantage of an API used for debugging, to map machine code pc to bytecode pc, to be able to identify in which bytecode range the time is spent in a function. The implementation is specific to the Cog VM, with a working version in both Squeak and Pharo. A similar design could apply in other VMs featuring similar debugging capabilities.
 
 %: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
 \section{Solution}
-% a few words about the port
-% then talk about the profiler optimisation
-% - the primitive : what it was doing before, what it does now : what have changed ? (figure)
-(added an argument, added a new method in which we do the mapping)
-(maybe talking about the API?)
+
+To profile accurately large native functions, we re-use the API available for debugging to identify in which section of the function the time is spent. The solution is split in two steps. First, we enhanced the primitive providing the description of the native functions present in the machine code zone to provide a mapping between machine code pc and bytecode pc in addition to the start address of the function. Second, we used the mapping to identify in which range of bytecodes each sample is.
+
+\subsection{Improved primitive}
+
+In the improved version of the primitive, if the native function has at least one machine code pc mapped to a bytecode pc, the primitive answers for the function, instead of the start address, an array starting with the start address followed by pairs of machine code pc and the corresponding mapped bytecode pc. 
+
++ EXAMPLE:
+decrire la methode ca fait 3 sends. \figref{fig:Code} decrit le bytecode. decrit la table. \figref{fig:Primitive}
+
+code d'une methode. avec 3 sends. (4 mapped points)
+
+Bytecode de la methode.
+
+\begin{figure}
+    \begin{center}
+    	Source code
+	\begin{code}
+	foo
+	\hspace{0.5cm} self foo.
+	\hspace{0.5cm} self bar.
+	\hspace{0.5cm} self baz.
+	\end{code}
+	Bytecode
+	\begin{code}
+	f17 FF self
+	\end{code}
+	\caption{Example method}
+    \label{fig:Code}
+    \end{center}
+\end{figure}
+
+\begin{figure}
+    \begin{center}
+		\noindent \begin{tabular}{l | l}
+		Existing primitive result & Improved primitive result \\		
+		\midrule
+		result 1 & result 2 \\	
+		\end{tabular}
+	\caption{Example of primitive results}
+    \label{fig:Primitive}
+    \end{center}
+\end{figure}
+
+\subsection{Accurate mapping and report}
+
 % - implementation (how do we use the results from the modified primitive in the profiler
 
+Expliquer en 1 paragraph
+
+decrire figure
+
+ \begin{figure}[!htp]
+     \begin{center}
+         \includegraphics[width=1.0\linewidth]{NewMapping}
+         \caption{Mapping with new feature}
+         \figlabel{fig:NewMapping}
+     \end{center}
+ \end{figure}
+ 
 %: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
-\section{Evaluation/Validation}
-benchmark
+\section{Example}
+
+Intro: this is a concrete example on a benchmark. (tinyBench ?)
+
+montrer avant / apres.
+
+
+
+\figref{fig:Example} describes bla.
+
+\begin{figure}
+    \begin{center}
+		\noindent \begin{tabular}{l | l}
+		Existing profiler report & Accurate profiler report \\		
+		\midrule
+		rapport 1 & rapport 2 \\	
+		\end{tabular}
+	\caption{Example of profiling reports}
+    \label{fig:Example}
+    \end{center}
+\end{figure}
+
 
 %: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 \section{Related Work}\seclabel{relatedWork}
+
+intro 
+
+\subsection{Smalltalk profilers}
+
+*profiling in Pharo-Smalltalk
+In Squeak, 2 (?) profiling tools are available in the image: MessageTally and VM profiler. Both are sampling profilers, but they are not used for the same purpose. MessageTally = image side, VM profiler = vm side.
+
 *messageTally [reference]
 description, comparison
 *spy [reference]
 description, comparison
 *gadgetProfiler [reference]
 description, comparison
+
+\subsection{Other VM profilers}
+
 jvisualvm
 
 %: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 \section{Conclusion and Future Work}\seclabel{conclusion}
+
+Future work: UI, Windows. -> engineering.
+
 % windows
 % UI
 
@@ -338,7 +460,7 @@ jvisualvm
 
 %{\small
 \bibliographystyle{elsarticle-num}
-\bibliography{scg}
+\bibliography{sista}
 %\bibliography{hapao}
 %}
 
