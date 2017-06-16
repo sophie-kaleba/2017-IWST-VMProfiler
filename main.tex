@@ -357,12 +357,11 @@ To profile accurately large native functions, we re-use the API available for de
 
 In the improved version of the primitive, if the native function has at least one machine code pc mapped to a bytecode pc, the primitive answers for the function, instead of the start address, an array starting with the start address followed by pairs of machine code pc and the corresponding mapped bytecode pc. 
 
-+ EXAMPLE:
-decrire la methode ca fait 3 sends. \figref{fig:Code} decrit le bytecode. decrit la table. \figref{fig:Primitive}
-
-code d'une methode. avec 3 sends. (4 mapped points)
-
-Bytecode de la methode.
+For example, the function foobar \figref{fig:Code} sends 3 messages. When translated to bytecode, you can indeed tell there are 3 send bytecodes, each responsible for the sending of a message (on bytecode pc 26, 29 and 32). As these bytecodes are mapped, the improved primitive \figref{fig:Primitive} will answer an array
+%+ EXAMPLE:
+%decrire la methode ca fait 3 sends. \figref{fig:Code} decrit le bytecode. decrit la table. \figref{fig:Primitive}
+%code d'une methode. avec 3 sends. (4 mapped points)
+%Bytecode de la methode.
 
 \begin{figure}
     \begin{center}
@@ -396,7 +395,17 @@ Bytecode de la methode.
 		\noindent \begin{tabular}{l | l}
 		Existing primitive result & Improved primitive result \\		
 		\midrule
-		result 1 & result 2 \\	
+		% template result 1 & result 2 \\	
+		foobar & foobar \\
+		0x0000FF45 & 0x0000FF45 \\
+		& anArray containing : \\
+		& 0x0000FF45 \\
+		& 0x0000FF47 \\
+		& 26 \\
+		& 0x0000FF52 \\
+		& 29 \\
+		& 0x0000FF63 \\
+		& 32 \\
 		\end{tabular}
 	\caption{Example of primitive results}
     \label{fig:Primitive}
