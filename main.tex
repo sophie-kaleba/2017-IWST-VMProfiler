@@ -219,13 +219,14 @@ $^3$Pleiad Lab, DCC, University of Chile}
 \begin{abstract}
 
 %context
-Code profiling enables the user to know where in an application the execution time is spent. This kind of data is crucial when you aim for better performance. Such profiling tools are already available for Smalltalk-based languages, such as MessageTally, GadgetProfiler or VMProfiler. The last one especially, by tracking down where the time is spent on virtual machine (VM) side, can provide significant data to help you tune the Cog virtual machine settings for performance.
+Code profiling enables the user to know where in an application or function the execution time is spent. This kind of information is crucial when you aim for better performance. 
+Such profiling tools are already available for Smalltalk-based languages, like MessageTally, GadgetProfiler or VMProfiler. The latter, especially, by tracking down where the time is spent on the virtual machine (VM) side, can provide significant data to help tuning the VM settings for performance.
 
 %problem
-However, while this VM profiler is able to identify in which functions the execution time is spent, it cannot identify where in these functions the time is spent. This is getting critical as the optimisations performed by the Just-In-Time compiler (JIT) result in functions of greater size, which are then hard to profile in an accurate way.
+However, while this VM profiler can identify in which functions the execution time is spent, it cannot identify where in these functions the time is spent. This is getting critical as the optimisations performed by the Just-In-Time compiler (JIT) result in functions of greater size, which are then harder to profile accurately.
 
 %solution
-In this paper, we discuss this problem and then we introduce the solution proposed to keep collecting relevant profiling data, using an API that allow us to identify for a given function in which bytecode range the time is spent.
+In this paper, we discuss this problem and then we introduce the solution proposed to keep collecting relevant profiling data, using an API that allow us to identify, for a given function, in which bytecode range the time is spent.
 
 \end{abstract}
 
