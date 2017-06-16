@@ -219,7 +219,7 @@ $^3$Pleiad Lab, DCC, University of Chile}
 \begin{abstract}
 
 %context
-Code profiling enables a user to know where in an application or function the execution time is spent. The Pharo ecosystem offers several code profilers. However, most of the publicly available profilers (MessageTally, Spy, GadgetProfiler) largely ignore the activity carried out by the Pharo virtual machine, thus incurring inaccuracy in the gathered information and missing important information, such as the JIT activity.
+Code profiling enables a user to know where in an application or function the execution time is spent. The Pharo ecosystem offers several code profilers. However, most of the publicly available profilers (MessageTally, Spy, GadgetProfiler) largely ignore the activity carried out by the virtual machine, thus incurring inaccuracy in the gathered information and missing important information, such as the JIT activity.
 
 This paper motivates and describes VMProfiler, a code execution profiler hooked into the virtual machine. VMProfiler exercises its analysis by monitoring the execution of the virtual machine. This paper presents the latest innovations carried out in VMProfiler, in particular to address some limitations related to assessing the activity of native functions (resulting from a JIT operation).
 
