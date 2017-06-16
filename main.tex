@@ -371,11 +371,6 @@ In this example, there are 4 bytecode ranges :
 	\item 0x0000FF63-end - bc 32 to bc 34
 \end{itemize}
 
-%+ EXAMPLE:
-%decrire la methode ca fait 3 sends. \figref{fig:Code} decrit le bytecode. decrit la table. \figref{fig:Primitive}
-%code d'une methode. avec 3 sends. (4 mapped points)
-%Bytecode de la methode.
-
 \begin{figure}
     \begin{center}
     	Source code
@@ -426,17 +421,20 @@ In this example, there are 4 bytecode ranges :
 
 \subsection{Accurate mapping and report}
 
-% - implementation (how do we use the results from the modified primitive in the profiler
+To compute the profiling statistics, the profiler requires the description of the native functions currently present in the machine code zone, each function being represented by a functionSymbol object, characterized by the name of the function and its starting and limit addresses in the machine code zone.
+A new field has been added to take the results of the modified primitive into account : \textit{mcpcbcpcmap}, standing for machine code program counter - bytecode program counter map. This dictionnary associates a machine code pc with a bytecode pc.
 
-Expliquer en 1 paragraph
+As shown in \figref{fig:NewMapping}, this new field helps with identifying where the execution time is spent. For instance, we know that foo starts at 0x0000FF76, and that the first mapped bytecode pc (42) is at 0x0000FF98 : it means that the 12 samples within this address range will refer to the bytecode instructions between 1 and 42.
+The same applies for the other entries : the unique sample withing the range 0x0000FF98 and 0x0000FFC1 will refer to the bytecode instructions between 42 and 49. 
 
-decrire figure
+In that case, 1932 samples were gathered in total and 20 were referring to foo. Among these 20 samples, 12 were referring to foo's bytecode pc between 1 and 42. Therefore, 60\% of the time spent in foo was spent between these bytecode pc.
+
 
  \begin{figure}[!htp]
      \begin{center}
          \includegraphics[width=1.0\linewidth]{NewMapping}
-         \caption{Mapping with new feature}
-         \figlabel{fig:NewMapping}
+         \caption{[chiffres à modifier]Mapping with new feature}
+         \label{fig:NewMapping}
      \end{center}
  \end{figure}
  
