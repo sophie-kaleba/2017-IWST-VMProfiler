@@ -324,7 +324,7 @@ Each function (indifferently, a native function or a C function) is represented 
  \paragraph{Primitive Cog Constituents.}
 The primitiveCollectCogCodeConstituents provides the VM profiler with the description of the native functions currently present in the machine code zone it needs. 
 This primitive answers an array of pair-wise elements as shown in \figref{fig:ContentsOfCollectCogCodePrim}. The first element of the pair is the name of the native function, the second one is its starting address in the code zone.
-It is called once the profiling has stopped and the samples has been gathered : the data provided by this primitive will be mapped with the samples collected.
+It is called once the profiling has stopped and the samples has been gathered : these samples will be mapped with the data provided by this primitive.
 
  \begin{figure}[!htp]
      \begin{center}
@@ -345,7 +345,7 @@ The VM development team is currently working on the implementation of an optimis
 
 \emph{How to provide accurate profiling information in large native functions profiled ?}
 
-To address this problem, we propose an implementation that take advantage of an API used for debugging, to map machine code pc to bytecode pc, to be able to identify in which bytecode range the time is spent in a function. The implementation is specific to the Cog VM, with a working version in both Squeak and Pharo. A similar design could apply in other VMs featuring similar debugging capabilities.
+To address this problem, we propose an implementation that takes advantage of an API used for debugging, to map machine code pc to bytecode pc, to be able to identify in which bytecode range the time is spent in a function. The implementation is specific to the Cog VM, with a working version in both Squeak and Pharo. A similar design could apply in other VMs featuring similar debugging capabilities.
 
 %: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
@@ -357,7 +357,20 @@ To profile accurately large native functions, we re-use the API available for de
 
 In the improved version of the primitive, if the native function has at least one machine code pc mapped to a bytecode pc, the primitive answers for the function, instead of the start address, an array starting with the start address followed by pairs of machine code pc and the corresponding mapped bytecode pc. 
 
-For example, the function foobar \figref{fig:Code} sends 3 messages. When translated to bytecode, you can indeed tell there are 3 send bytecodes, each responsible for the sending of a message (on bytecode pc 26, 29 and 32). As these bytecodes are mapped, the improved primitive \figref{fig:Primitive} will answer an array
+For example, the function foobar in \figref{fig:Code} sends 3 messages. Once translated to bytecode, there are indeed 3 send bytecodes, each responsible for the sending of a message (on bytecode pc 26, 29 and 32). For this function, the existing primitive was answering 2 elements : 
+\begin{itemize}
+	\item the name of the function
+	\item its starting address in the machine code zone
+\end{itemize}
+The improved primitive still answers 2 elements, but, while the first one remains unchanged and still refers to the name of the function, the second one is an array, because the 3 send bytecodes are mapped, as you can see in \figref{fig:Primitive}. The first element is the starting address of the function in the machine code zone. The other elements come by pair : the first one is the starting address of the bytecode instruction in the machine code zone, the second one is the bytecode pc.
+In this example, there are 4 bytecode ranges : 
+\begin{itemize}
+	\item 0x0000FF45-47 - bc 1 to bc 26
+	\item 0x0000FF47-52 - bc 26 to bc 29
+	\item 0x0000FF52-63 - bc 29 to bc 32
+	\item 0x0000FF63-end - bc 32 to bc 34
+\end{itemize}
+
 %+ EXAMPLE:
 %decrire la methode ca fait 3 sends. \figref{fig:Code} decrit le bytecode. decrit la table. \figref{fig:Primitive}
 %code d'une methode. avec 3 sends. (4 mapped points)
@@ -397,8 +410,7 @@ For example, the function foobar \figref{fig:Code} sends 3 messages. When transl
 		\midrule
 		% template result 1 & result 2 \\	
 		foobar & foobar \\
-		0x0000FF45 & 0x0000FF45 \\
-		& anArray containing : \\
+		0x0000FF45 & anArray containing : \\
 		& 0x0000FF45 \\
 		& 0x0000FF47 \\
 		& 26 \\
