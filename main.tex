@@ -269,10 +269,10 @@ This paper motivates and describes VMProfiler, a code execution profiler hooked 
 %main challenge in general and thus for VMs: performance
 
 \textbf{[\`a r\'e\'ecrire]} Even though the technical specs of computers get more and more impressive, performance, both in terms of execution time and XXX, remains a major goal to be pursued). \textbf{[\`a r\'e\'ecrire]}
-This statement applies of course to virtualised environments and assuring the performance of the virtual machine (VM) is critical when you aim for an overall good performance. 
+This statement applies of course to virtualized environments and assuring the performance of the virtual machine (VM) is critical when you aim for an overall good performance. 
 Thus, it is crucial to know where the time is spent in the VM during execution: indeed, it helps identifying where to tune its settings to actually get better results.
 
-To get a precise idea of the program behaviour, critical information can be collected by profiling code.
+To get a precise idea of the program behavior, critical information can be collected by profiling code.
 Such profiling tools are already available in Pharo, like MessageTally \cite{Berg13a} and VMProfiler: they provide statistical/graphical reports, showing the methods in which most of the execution time is spent, and how much of this time is spent in garbage collection \cite{Berg13a}. However, the VM profiler, unlike MessageTally, provides statistical data about the time spent in the Cog VM. Cog~\cite{Mira08a}~ is a virtual machine designed for Smalltalk, and currently used for various Smalltalk-based languages such as Pharo~\cite{Blac09a} or Squeak~\cite{Blac07a}. It features a bytecode interpreter and a JIT. It is in the code of these features that we find out where the execution time is spent.\\
 
 % problem 
@@ -468,23 +468,45 @@ montrer avant / apres.
 %: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 \section{Related Work}\seclabel{relatedWork}
 
-intro 
+The field of execution profiling is vast and has receive a large attention from the research community. This section presents the different works related to the effort presented in this paper.
 
-\subsection{Smalltalk profilers}
+\subsection{Standard Pharo profilers}
 
-*profiling in Pharo-Smalltalk
-In Squeak, 2 (?) profiling tools are available in the image: MessageTally and VM profiler. Both are sampling profilers, but they are not used for the same purpose. MessageTally = image side, VM profiler = vm side.
+Smalltalk, and therefore Pharo, offers a sophisticated reflective API. Threads are openly exposed and the stack for each active thread may be introspected. In addition, the next thread in the execution queue may be accessed. \ct{MessageTally} and \ct{AndreasSystemProfiler} are two standard profilers in Pharo that exploit this advanced reflective API. Both follow the same principle: a thread of high-priority is run and regularly it samples the thread queue. The frequency of the samples typically ranges from 1 to 10 milliseconds. After the program execution, frequency of method context frames is determined. Such frequency is used to estimate the time spent in each frame. 
 
-*messageTally [reference]
-description, comparison
-*spy [reference]
-description, comparison
-*gadgetProfiler [reference]
-description, comparison
+Both profilers essentially rely on the Smalltalk reflective API. Since most of the computation happens within the image, the overhead of the profiler is therefore likely to be expensive and intrusive (\eg time to execute an application is longer when being profiled). It is known that getting a sample profiler with a high-precision is difficult to achieve and prone to error~\cite{Mytk08a,Mytk10a,Berg11d}. 
 
-\subsection{Other VM profilers}
+%====
+\subsection{Support in the Virtual Machine}
 
-jvisualvm
+The Java Virtual Machine Tool Interface (JVM TI) is a native programming interface offered by the JVM to build dedicated profiling and debugging tools\footnote{\url{https://docs.oracle.com/javase/8/docs/platform/jvmti/jvmti.html}}. JVM TI provides both a way to inspect the state and to control the execution of Java applications. %JVM TI is a two-way interface
+
+A JVM TI client, defined as an \emph{agent}, can be notified of particular events emitted by the JVM. In total, a client may receive 31 different kinds of JVM events. These events covers breakpoints, class loading, garbage collection, method execution, monitor, and virtual machine start up and destruction.
+
+JVisualVM\footnote{\url{https://visualvm.github.io}} is a visual profiling tool and framework. JVisualVM offers a large set of features, including remote debugging / profiling, thread analysis, heap snapshot, and garbage collection monitoring. 
+
+%====
+\subsection{Generic profilers}
+
+The profiling tool described in this paper is intended to be used to address performance issues. The software engineering community has produced software execution monitoring technique to profile various aspects related to an execution~\cite{Ress12a,Ress12b}. 
+
+A common profiling technique is to use instrumentation instead of sampling~\cite{Metz05a}. For example, Spy~\cite{Berg11h} is a framework to build domain-specific profilers, with application ranging from memory consumption analysis~\cite{Infa15a} to test coverage~\cite{Berg12c}.
+
+%\subsection{Smalltalk profilers}
+%
+%*profiling in Pharo-Smalltalk
+%In Squeak, 2 (?) profiling tools are available in the image: MessageTally and VM profiler. Both are sampling profilers, but they are not used for the same purpose. MessageTally = image side, VM profiler = vm side.
+%
+%*messageTally [reference]
+%description, comparison
+%*spy [reference]
+%description, comparison
+%*gadgetProfiler [reference]
+%description, comparison
+%
+%\subsection{Other VM profilers}
+%
+%jvisualvm
 
 %: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 \section{Conclusion and Future Work}\seclabel{conclusion}
