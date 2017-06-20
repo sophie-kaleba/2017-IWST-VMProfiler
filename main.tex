@@ -305,6 +305,7 @@ This section first defines the terminology used in the paper, then describes the
 
 VMProfiler has been available for almost a decade in Squeak and has been recently ported to Pharo. VMProfiler allows one to track down where the time is spent in the VM when executing a specific portion of code. VMProfiler computes where the time is spent in the compiled C code of the VM, in the VM plugins and in the native functions. All the results are available as a statistical report. A typical report includes two main sections, the time spent in generated code, \ie in native functions and the time spent in the compiled C code. The time spent in the compiled C code includes the time spent in the bytecode interpreter, in the garbage collector and in the just-in-time compiler. 
 
+\paragraph{Cog memory.} As depicted in \figref{MAYBE}, the machine code zone is part of the Cog memory, along with the heap and the stack. While regular objects are stored in the heap, the native functions stored in the machine code zone comes in many shapes : trampolines, PIC (closed and openPIC), cogMethod... \textbf{[à finir]}
 %MAYBE -- memory representation of the Cog execution.
 
 \paragraph{Implementation.} Implementation-wise, VMProfiler is a sampling profiler. When profiling is started, a separate high-priority OS thread is started and collects the instruction pointers of the VM OS thread in a large circular buffer at a cadence of 1.3GHz. Once profiling stops, a primitive method is available to gather the samples from the VM into a Bitmap. To understand to which functions the samples correspond to, the VM profiler requests:
@@ -455,32 +456,32 @@ Among the jitted methods, \ct{Integer>>benchFib} was the one in which most of th
 In the existing version of the profiler, one cannot identify where those 45\% of the total execution time are spent. In the accurate version, however, the method is decomposed in several bytecode ranges (in this case, 8) : one can then identify in which bytecode range(s) most of the time is spent. Here, 57,95\% that time is spent in the bytecode header. The next significant part of time is spent in the last bytecode instructions (12\% starting from bytecode pc 38).
 
  
-\begin{figure}
-    \begin{center}
-   
-   		\newcommand*{\MyIndent}{\hspace*{0.5cm}}%
-		\noindent \scriptsize \begin{tabular}{l | l}
-		Existing profiler report & Accurate profiler report \\		
-		\midrule
-		10305 samples in the VM	  & 10368 samples in the VM	\\	
-		10007 samples in generated vm code & 10067 samples in generated vm code\\ 
-		298 samples in vanilla vm code & 301 samples in vanilla vm code\\
-		& \\
-		\% of generated vm code (\% of total)(samples) & \% of generated vm code (\% of total)(samples) \\
-		46.55\%    (45.08\%)	Integer$>>$benchFib	(4658)	(46.55\%) & 47.03\%    (45.58\%)	Integer{$>>$}benchFib	(4735)	(47.03) \\
-	     & \MyIndent 57.95\% 1-$>$23	(2744)	(57.95\%)\\
-	     & \MyIndent 5.89\%	24-$>$30	(279)	(63.84\%)\\
-	     & \MyIndent 2.89\%	30-$>$31	(137)	(66.74\%)\\
-	     & \MyIndent 8.24\%	31-$>$34	(390)	(74.97\%)\\
-	     & \MyIndent 3.38\%	34-$>$35	(160)	(78.35\%)\\
-	     & \MyIndent 6.59\%	35-$>$36	(312)	(84.94\%)\\
-	     & \MyIndent 3.06\%	36-$>$38	(145)	(88.00\%)\\
-	     & \MyIndent 12.00\%	38-$>$6667	(568)	(100.0\%)\\
-		\end{tabular}
-	\caption{Example of profiling reports}
-    \figlabel{fig:Example}
-    \end{center}
-\end{figure}
+%\begin{figure}
+%    \begin{center}
+%   
+%   		\newcommand*{\MyIndent}{\hspace*{0.5cm}}%
+%		\noindent \scriptsize \begin{tabular}{l | l}
+%		Existing profiler report & Accurate profiler report \\		
+%		\midrule
+%		10305 samples in the VM	  & 10368 samples in the VM	\\	
+%		10007 samples in generated vm code & 10067 samples in generated vm code\\ 
+%		298 samples in vanilla vm code & 301 samples in vanilla vm code\\
+%		& \\
+%		\% of generated vm code (\% of total)(samples) & \% of generated vm code (\% of total)(samples) \\
+%		46.55\%    (45.08\%)	Integer$>>$benchFib	(4658)	(46.55\%) & 47.03\%    (45.58\%)	Integer{$>>$}benchFib	(4735)	(47.03) \\
+%	     & \MyIndent 57.95\% 1-$>$23	(2744)	(57.95\%)\\
+%	     & \MyIndent 5.89\%	24-$>$30	(279)	(63.84\%)\\
+%	     & \MyIndent 2.89\%	30-$>$31	(137)	(66.74\%)\\
+%	     & \MyIndent 8.24\%	31-$>$34	(390)	(74.97\%)\\
+%	     & \MyIndent 3.38\%	34-$>$35	(160)	(78.35\%)\\
+%	     & \MyIndent 6.59\%	35-$>$36	(312)	(84.94\%)\\
+%	     & \MyIndent 3.06\%	36-$>$38	(145)	(88.00\%)\\
+%	     & \MyIndent 12.00\%	38-$>$6667	(568)	(100.0\%)\\
+%		\end{tabular}
+%	\caption{Example of profiling reports}
+%    \figlabel{fig:Example}
+%    \end{center}
+%\end{figure}
 
 
 %: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
@@ -531,16 +532,17 @@ A common profiling technique is to use instrumentation instead of sampling~\cite
 
 In this paper, we have presented VMProfiler, a profiler enabling to identify where the execution time is spent on the VM side, i.e. identify where the time is spent in the C code of the VM (interpreter, garbage collector) and in the jitted functions.\\
 
-As this kind of tool is typically used to know where to boost performance, the existing VMprofiler was suffering from a small problem : it could not provide accurate profiling data for large native code functions. Indeed, it could report that most of the execution time was spent in a function, but not \textit{where} in this function the time was spent.
-This problem was growing importance as more and more optimisations were performed by the JIT ; inlining, especially, makes the jitted functions larger, and thus, harder to profile accurately.
+As this kind of tool is typically used to know where to boost performance, the existing VMprofiler could be improved : it could not provide accurate profiling data for large native code functions. Indeed, it could report that most of the execution time was spent in a function, but not \textit{where} in this function the time was spent.
+This problem was getting significant as more and more optimisations were performed by the JIT ; inlining, especially, makes the jitted functions larger, and thus, harder to accurately profile.
 
-This paper describes a way to address this problem : an API used for debugging purposes offers a mapping between machine code pc and bytecode pc. This mapping can then be used to determine bytecode ranges in a large native code function, and thus identify how many samples were included in one or the other range.\\
+This paper describes a way to address this problem : an API used for debugging purposes offers a mapping between machine code pc and bytecode pc. This mapping can then be used to determine bytecode ranges in a large native code function, and thus identify how many samples are included in one or the other range.\\
 
 Now, the VMProfiler can provide accurate profiling statistical reports.
-ADD IMPACT Further improvements are currently being considered : 
+\textbf{Impact of this improvement : performance...?}
+Further improvements are currently being considered : 
 \begin{itemize}
 	\item As for now, the VMProfiler is only available headless in Pharo. A graphical user interface could be implemented to provide profiling data from another perspective.
-	\item Sometimes, customers running a Windows environment request profiling, yet the VMProfiler is currently available for Mac and Linux only. The VMProfiler could then be implemented for Windows to tackle this problem.
+	\item Sometimes, customers in a Windows environment request profiling, yet the VMProfiler is currently available for Mac and Linux only. The VMProfiler could then be implemented for Windows to tackle this problem.
 \end{itemize}
 
 
