@@ -545,9 +545,7 @@ This problem was getting significant as more and more optimisations were perform
 
 This paper describes a way to address this problem : an API used for debugging purposes offers a mapping between machine code pc and bytecode pc. This mapping can then be used to determine bytecode ranges in a large native code function, and thus identify how many samples are included in one or the other range.\\
 
-Now, VMProfiler can provide accurate profiling statistical reports.
-\textbf{Impact of this improvement : performance...?}
-Further improvements are currently being considered: 
+Now VMProfiler can provide accurate profiling statistical reports. Further improvements are currently being considered: 
 \begin{itemize}
 	\item As for now, VMProfiler is only available headless in Pharo. A graphical user interface could be implemented to provide profiling data from another perspective.
 	\item Sometimes, customers in a Windows environment request profiling, yet the VMProfiler is currently available for Mac and Linux only. The VMProfiler could then be implemented for Windows to tackle this problem.
