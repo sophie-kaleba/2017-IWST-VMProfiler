@@ -28,9 +28,9 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2017-06-15 13:18:01 +0000</string>
+	<string>2017-06-20 17:18:05 +0000</string>
 	<key>Modifier</key>
-	<string>Clement Bera</string>
+	<string>Sophie Kaleba</string>
 	<key>MovementHandleVisible</key>
 	<string>NO</string>
 	<key>NotesVisible</key>
@@ -214,7 +214,7 @@
 							<key>TailArrow</key>
 							<string>0</string>
 							<key>Width</key>
-							<real>6</real>
+							<real>9</real>
 						</dict>
 					</dict>
 				</dict>

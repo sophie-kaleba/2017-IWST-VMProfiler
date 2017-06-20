@@ -402,7 +402,7 @@ For example, the function \ct{foobarbaz} in \figref{Code} sends 3 messages. Once
     \end{center}
 \end{figure}
 
-The improved primitive still answers 2 elements, but, while the first one remains unchanged and still refers to the name of the function, the second one is an array, because the 3 send bytecodes are mapped, as you can see in \figref{Primitive}. The first element is the starting address of the function in the machine code zone. The other elements come by pair: the first one is the starting address of the bytecode instruction in the machine code zone, the second one is the bytecode pc.
+The improved primitive still answers 2 elements, but, while the first one remains unchanged and still refers to the name of the function, the second one is an array, because the 3 send bytecodes are mapped, as you can see in \figref{BytecodeRange}. The first element is the starting address of the function in the machine code zone. The other elements come by pair: the first one is the starting address of the bytecode instruction in the machine code zone, the second one is the bytecode pc.
 In this example, there are 4 bytecode ranges: 
 
 \begin{itemize}
@@ -413,7 +413,13 @@ In this example, there are 4 bytecode ranges:
 	\item 0x0000FF63-end - bc 32 to bc 34
 \end{itemize}
 
-
+ \begin{figure}[b!]
+     \begin{center}
+         \includegraphics[width=1.0\linewidth]{BytecodeRange}
+         \caption{Example of primitive results}
+         \label{fig:BytecodeRange}
+     \end{center}
+ \end{figure}
 
 
 %\begin{figure}[h!]
@@ -469,7 +475,7 @@ In that case, 1932 samples were gathered in total and 20 were referring to \ct{f
 
   \begin{figure*}[!htp]
      \begin{center}
-         \includegraphics[width=0.7\linewidth]{ReportComparison}
+         \includegraphics[width=0.9\linewidth]{ReportComparison}
          \caption{Comparison of profiling reports}
          \figlabel{fig:ReportComparison}
      \end{center}
