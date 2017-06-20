@@ -58,8 +58,8 @@
 			<integer>50</integer>
 			<key>Points</key>
 			<array>
-				<string>{209, 217}</string>
-				<string>{209, 291}</string>
+				<string>{209, 182}</string>
+				<string>{209, 256}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -80,7 +80,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{69.5, 326}, {266, 59}}</string>
+			<string>{{69.5, 291}, {266, 59}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
@@ -112,7 +112,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{69.5, 301}, {266, 25}}</string>
+			<string>{{69.5, 266}, {266, 25}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
@@ -1265,7 +1265,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2017-06-15 12:27:53 +0000</string>
+	<string>2017-06-20 14:37:46 +0000</string>
 	<key>Modifier</key>
 	<string>Clement Bera</string>
 	<key>NotesVisible</key>
