@@ -305,8 +305,15 @@ This section first defines the terminology used in the paper, then describes the
 
 VMProfiler has been available for almost a decade in Squeak and has been recently ported to Pharo. VMProfiler allows one to track down where the time is spent in the VM when executing a specific portion of code. VMProfiler computes where the time is spent in the compiled C code of the VM, in the VM plugins and in the native functions. All the results are available as a statistical report. A typical report includes two main sections, the time spent in generated code, \ie in native functions and the time spent in the compiled C code. The time spent in the compiled C code includes the time spent in the bytecode interpreter, in the garbage collector and in the just-in-time compiler. 
 
-\paragraph{Cog memory.} As depicted in \figref{MAYBE}, the machine code zone is part of the Cog memory, along with the heap and the stack. While regular objects are stored in the heap, the native functions stored in the machine code zone comes in many shapes : trampolines, PIC (closed and openPIC), cogMethod... \textbf{[à finir]}
-%MAYBE -- memory representation of the Cog execution.
+\paragraph{Cog memory.} As depicted in \figref{CogMemory}, the machine code zone is part of the Cog memory, along with the heap and the stack. While regular objects are stored in the heap, the native code functions stored in the machine code zone come in many shapes : trampolines, PIC (closed and openPIC), cogMethod...
+
+ \begin{figure}[!htp]
+     \begin{center}
+         \includegraphics[width=1\linewidth]{CogMemory}
+         \caption{Memory representation of the Cog execution}
+         \label{fig:CogMemory}
+     \end{center}
+ \end{figure}
 
 \paragraph{Implementation.} Implementation-wise, VMProfiler is a sampling profiler. When profiling is started, a separate high-priority OS thread is started and collects the instruction pointers of the VM OS thread in a large circular buffer at a cadence of 1.3GHz. Once profiling stops, a primitive method is available to gather the samples from the VM into a Bitmap. To understand to which functions the samples correspond to, VMProfiler requests:
 \begin{itemize}
@@ -450,16 +457,25 @@ In that case, 1932 samples were gathered in total and 20 were referring to \ct{f
 In this section, we present a concrete example of profiling on a benchmark.
 
 We ran the following benchmark: \ct{10 tinyBenchmarks} using first the existing VMProfiler, and using then the accurate VMProfiler. 
-\figref{fig:Example} puts the two  profiling reports extracts side by side : the one on the left was before introducing the modified primitive, and the one on the right was once the new results were taken into account.
+\figref{fig:ReportComparison} puts the two  profiling reports extracts side by side : the one on the left was before introducing the modified primitive, and the one on the right was once the new results were taken into account.
 Among the jitted methods, \ct{Integer>>benchFib} was the one in which most of the execution time was spent (around 45\% of the total time).
 
 In the existing version of the profiler, one cannot identify where those 45\% of the total execution time are spent. In the accurate version, however, the method is decomposed in several bytecode ranges (in this case, 8) : one can then identify in which bytecode range(s) most of the time is spent. Here, 57,95\% that time is spent in the bytecode header. The next significant part of time is spent in the last bytecode instructions (12\% starting from bytecode pc 38).
 
+In the \ct{Integer>>benchmark} function, most of the time is spent in the 74 -$>$ 78 bytecode range, referring to the following bytecode instructions : 
+\begin{itemize}
+	\item 74 $<$B0$>$ send: +
+	\item 75 $<$6B$>$ popIntoTemp: 3
+	\item 76 $<$13$>$ pushTemp: 3
+	\item 77 $<$10$>$ pushTemp: 0
+	%\item 78 $<$B4$>$ send: $<$=
+\end{itemize}
+
   \begin{figure}[!htp]
      \begin{center}
-         \includegraphics[width=1.055\linewidth]{reportComparison}
+         \includegraphics[width=1.055\linewidth]{ReportComparison}
          \caption{Comparison of profiling reports}
-         \label{fig:ReportComparison}
+         \figlabel{fig:ReportComparison}
      \end{center}
  \end{figure}
 
