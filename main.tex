@@ -402,18 +402,18 @@ For example, the function \ct{foobarbaz} in \figref{Code} sends 3 messages. Once
     \end{center}
 \end{figure}
 
-The improved primitive still answers 2 elements, but, while the first one remains unchanged and still refers to the name of the function, the second one is an array, because the 3 send bytecodes are mapped, as you can see in \figref{BytecodeRange}. The first element is the starting address of the function in the machine code zone. The other elements come by pair: the first one is the starting address of the bytecode instruction in the machine code zone, the second one is the bytecode pc.
+The improved primitive still answers 2 elements, but, while the first one remains unchanged and still refers to the name of the function, the second one is an array, because the 3 send bytecodes are mapped, as you can see in \figref{BytecodeRange}. The first element is the starting address of the function in the machine code zone. The other elements come by pair: the first one is the start address of the bytecode instruction in the machine code zone, the second one is the bytecode pc.
 In this example, there are 4 bytecode ranges: 
 
-\begin{itemize}
-	\item TO CHANGE WITH FIGURE
-	\item 0x0000FF45-47 - bc 1 to bc 26
-	\item 0x0000FF47-52 - bc 26 to bc 29
-	\item 0x0000FF52-63 - bc 29 to bc 32
-	\item 0x0000FF63-end - bc 32 to bc 34
-\end{itemize}
+%\begin{itemize}
+%	\item TO CHANGE WITH FIGURE
+%	\item 0x0000FF45-47 - bc 1 to bc 26
+%	\item 0x0000FF47-52 - bc 26 to bc 29
+%	\item 0x0000FF52-63 - bc 29 to bc 32
+%	\item 0x0000FF63-end - bc 32 to bc 34
+%\end{itemize}
 
- \begin{figure}[b!]
+ \begin{figure}[htp!]
      \begin{center}
          \includegraphics[width=1.0\linewidth]{BytecodeRange}
          \caption{Example of primitive results}
@@ -455,10 +455,10 @@ In this example, there are 4 bytecode ranges:
 To compute the profiling statistics, the profiler requires the description of the native functions currently present in the machine code zone, each function being represented by a functionSymbol object, characterized by the name of the function and its starting and limit addresses in the machine code zone.
 A new field has been added to take the results of the modified primitive into account: \textit{mcpcbcpcmap}, standing for machine code program counter - bytecode program counter map. This dictionary associates a machine code pc with a bytecode pc.
 
-As shown in \figref{NewMapping}, this new field helps with identifying where the execution time is spent. For instance, we know that foo starts at \ct{0x0000FF76}, and that the first mapped bytecode pc (42) is at \ct{0x0000FF98}: it means that the 12 samples within this address range will refer to the bytecode instructions between 1 and 42.
-The same applies for the other entries: the unique sample within the range \ct{0x0000FF98} and \ct{0x0000FFC1} will refer to the bytecode instructions between 42 and 49. 
+As shown in \figref{NewMapping}, this new field helps with identifying where the execution time is spent. For instance, we know that \ct{foobarbaz} starts at \ct{0x0000FF45}, and that the first mapped bytecode pc (26) is at \ct{0x0000FF47}: it means that the 12 samples within this address range will refer to the bytecode instructions between 1 and 26.
+The same applies for the other entries: the unique sample within the range \ct{0x0000FF47} and \ct{0x0000FF52} will refer to the bytecode instructions between 26 and 29. 
 
-In that case, 1932 samples were gathered in total and 20 were referring to \ct{foo}. Among these 20 samples, 12 were referring to foo's bytecode pc between 1 and 42. Therefore, 60\% of the time spent in \ct{foo} was spent between these bytecode pc.
+In that case, 1932 samples were gathered in total and 20 were referring to \ct{foobarbaz}. Among these 20 samples, 12 were referring to foo's bytecode pc between 1 and 26. Therefore, 60\% of the time spent in \ct{foobarbaz} was spent between these bytecode pc.
 
 
  \begin{figure}[!htp]

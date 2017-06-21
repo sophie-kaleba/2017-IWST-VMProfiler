@@ -28,7 +28,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2017-06-20 17:18:05 +0000</string>
+	<string>2017-06-21 09:07:19 +0000</string>
 	<key>Modifier</key>
 	<string>Sophie Kaleba</string>
 	<key>MovementHandleVisible</key>
@@ -94,7 +94,7 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{0, 0}, {1288, 1319}}</string>
+				<string>{{0, 0}, {1099, 1319}}</string>
 				<key>Class</key>
 				<string>ShapedGraphic</string>
 				<key>ID</key>
@@ -127,7 +127,33 @@
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{107.99999999999999, 148.00000000000006}, {120.00000000000003, 77.999989522692886}}</string>
+					<string>{{18.596491228070192, 110}, {209.40350723266602, 39}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>15</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Width</key>
+							<real>3</real>
+						</dict>
+					</dict>
+				</dict>
+				<dict>
+					<key>Bounds</key>
+					<string>{{107.99999999999999, 148.00000000000006}, {120.00000000000003, 68.157885581570383}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
@@ -148,16 +174,14 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs24 \cf0 0x0000FF98 -&gt; 42\
-0x0000FFC1 -&gt; 49\
-0x0000FFE6 -&gt; 52\
-...\
-0x00010014D -&gt; 89}</string>
+\f0\fs24 \cf0 0x0000FF47 -&gt; 26\
+0x0000FF52 -&gt; 29\
+0x0000FF63 -&gt; 32}</string>
 					</dict>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{18.596492767333984, 148.00001047730711}, {89.403508771929808, 77.999989522692886}}</string>
+					<string>{{18.596492767333984, 148.00000915527175}, {89.403508771929808, 68.157885581570383}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
@@ -244,11 +268,11 @@
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
 \f0\fs24 \cf0 1932 samples in profiled code.\
-20 (12 + 1 + 7) samples in foo.\
+20 (12 + 1 + 7) samples in foobarbaz.\
 1.04% (20/1932) of execution time spent in foo \
-     12 samples between bcpc 42 and 49\
-       1 samples between bcpc 49 and 52\
-       7 samples between bcpc 83 and 89 }</string>
+     12 samples between bcpc 1 and 26\
+       1 samples between bcpc 26 and 29\
+       7 samples between bcpc 29 and 32 }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -293,7 +317,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{289, 95.8245849609375}, {109, 59}}</string>
+					<string>{{291.00000153926379, 95.98248291015625}, {109, 59}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
@@ -366,7 +390,7 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs24 \cf0 0x0000FFD4}</string>
+\f0\fs24 \cf0 0x0000FF49}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -509,32 +533,6 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{18.596492767333984, 109}, {209.40350723266602, 39}}</string>
-					<key>Class</key>
-					<string>ShapedGraphic</string>
-					<key>ID</key>
-					<integer>15</integer>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Width</key>
-							<real>3</real>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Bounds</key>
 					<string>{{373, 154.8245849609375}, {26, 20}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
@@ -582,7 +580,7 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs24 \cf0 0x000157B1}</string>
+\f0\fs24 \cf0 0x00010A55}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -634,7 +632,7 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs24 \cf0 0x0000FF89}</string>
+\f0\fs24 \cf0 0x0000FF46}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -790,7 +788,7 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs24 \cf0 0x0001062D}</string>
+\f0\fs24 \cf0 0x0000FF62}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -1138,7 +1136,7 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs24 \cf0 0x00010A56}</string>
+\f0\fs24 \cf0 0x00010A25}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -1190,7 +1188,7 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs24 \cf0 0x0000FF76}</string>
+\f0\fs24 \cf0 0x0000FF45}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -1242,7 +1240,7 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs24 \cf0 foo}</string>
+\f0\fs24 \cf0 foobarbaz}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -1414,7 +1412,7 @@
 	<key>WindowInfo</key>
 	<dict>
 		<key>Frame</key>
-		<string>{{17, 68}, {1263, 709}}</string>
+		<string>{{206, 68}, {1074, 709}}</string>
 		<key>ShowInfo</key>
 		<true/>
 		<key>ShowRuler</key>
@@ -1426,7 +1424,7 @@
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{-35, -53}, {730, 536}}</string>
+		<string>{{-35, -53}, {541, 536}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
