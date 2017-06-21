@@ -303,7 +303,7 @@ This section first defines the terminology used in the paper, then describes the
 
 \subsection{Existing VM profiler}
 
-VMProfiler has been available for almost a decade in Squeak and has been recently ported to Pharo. VMProfiler allows one to track down where the time is spent in the VM when executing a specific portion of code. VMProfiler computes where the time is spent in the compiled C code of the VM, in the VM plugins and in the native functions. All the results are available as a statistical report. A typical report includes two main sections, the time spent in generated code, \ie in native functions and the time spent in the compiled C code. The time spent in the compiled C code includes the time spent in the bytecode interpreter, in the garbage collector and in the just-in-time compiler. 
+VMProfiler has been available for almost a decade in Squeak and has been recently ported to Pharo. VMProfiler allows one to track down where the time is spent in the VM when executing a specific portion of code. VMProfiler computes where the time is spent in the compiled C code of the VM, in the VM plugins and in the native functions. All the results are available as a statistical report. A typical report includes two main sections, the time spent in generated code, \ie in native functions and the time spent in the compiled C code. The time spent in the compiled C code includes the time spent in the bytecode interpreter, in the garbage collector and in the JIT. 
  
 \paragraph{Cog memory.} As depicted in \figref{CogMemory}, the machine code zone is composed of three areas (in order, the numbers match the numbers on the figure):
 \begin{enumerate}
@@ -324,7 +324,7 @@ During the runtime, part of the machine code zone is unused. When the machine co
 
 We use three keyword to identify different addresses in the machine code zone. \emph{CogCode} is the beginning of the machine code zone, before the trampolines and enilmoparts. \emph{CCFree} is the beginning of the unused part of the machine code zone. \emph{CCEnd} is the last address of the machine code zone before the linked list of young referrers.
 
-\paragraph{Implementation.} Implementation-wise, VMProfiler is a sampling profiler. When profiling is started, a separate high-priority OS thread is started and collects the instruction pointers of the VM OS thread in a large circular buffer at a cadence of 1.3GHz. Once profiling stops, a primitive method is available to gather the samples from the VM into a Bitmap. To understand to which functions the samples correspond to, VMProfiler requests:
+\paragraph{Implementation.} Implementation-wise, VMProfiler is a sampling profiler. When profiling is started, a separate high-priority OS thread is started and collects the instruction pointers of the VM OS thread in a large circular buffer at a cadence of 1.4GHz. Once profiling stops, a primitive method is available to gather the samples from the VM into a Bitmap. To understand to which functions the samples correspond to, VMProfiler requests:
 \begin{itemize}
 	\item The symbol table of the VM executable and all external plugins.
 	\item A description of the native functions currently present in the machine code zone.
@@ -358,7 +358,7 @@ To be able to debug native functions as if they were executed as a bytecode func
  
 \subsection{Problem statement}
 
-The VM development team is currently working on the implementation of an optimising Just-in-time compiler for the Cog VM, with optimisations such as speculative inlining, as described in the work of H\"olzle and Ungar~\cite{Holz94a}, in a similar way to production VMs such as Java's hotspot VM (The hotspot VM is the default virtual machine for Java~\cite{Pale01a} and Javascript's V8 engine (V8 is mostly used as the Javascript engine for Google Chrome and NodeJS.~\cite{V8}). The optimising is designed as a bytecode functions to bytecode functions runtime optimising compiler, re-using the existing Just-in-time compiler as a back-end to generate native functions. In this context, optimised functions are present in the form of bytecode functions, using the extended bytecode set described in the work of B\'era \etal~\cite{Bera14a}. When profiling optimised code for benchmarks such as the Games benchmark~\cite{GameBenchs}, VMProfiler now shows that all the time is spent in a single bytecode function (the bytecode function where the rest of the functions used by the benchmark are inlined). To improve performance and tune the optimising JIT, the VM development team requires more information about where the time is spent in optimised function, for example, in which range of bytecodes the time is spent.
+The VM development team is currently working on the implementation of an optimising JIT for the Cog VM, with optimisations such as speculative inlining, as described in the work of H\"olzle and Ungar~\cite{Holz94a}, in a similar way to production VMs such as Java's hotspot VM (The hotspot VM is the default virtual machine for Java~\cite{Pale01a} and Javascript's V8 engine (V8 is mostly used as the Javascript engine for Google Chrome and NodeJS.~\cite{V8}). The optimising is designed as a bytecode functions to bytecode functions runtime optimising compiler, re-using the existing JIT as a back-end to generate native functions. In this context, optimised functions are present in the form of bytecode functions, using the extended bytecode set described in the work of B\'era \etal~\cite{Bera14a}. When profiling optimised code for benchmarks such as the Games benchmark~\cite{GameBenchs}, VMProfiler now shows that all the time is spent in a single bytecode function (the bytecode function where the rest of the functions used by the benchmark are inlined). To improve performance and tune the optimising JIT, the VM development team requires more information about where the time is spent in optimised function, for example, in which range of bytecodes the time is spent.
 
 \vspace{0.2cm}
 \emph{How to provide accurate profiling information in large native functions profiled?}
@@ -476,7 +476,7 @@ In that case, 1932 samples were gathered in total and 20 were referring to \ct{f
   \begin{figure*}[!htp]
      \begin{center}
          \includegraphics[width=0.9\linewidth]{ReportComparison}
-         \caption{Comparison of profiling reports}
+         \caption{Comparison of profiling reports for \ct{10 tinyBenchmark}}
          \figlabel{fig:ReportComparison}
      \end{center}
  \end{figure*}
@@ -484,24 +484,24 @@ In that case, 1932 samples were gathered in total and 20 were referring to \ct{f
 In this section, we present a concrete example of profiling on a benchmark.
 
 We ran the following benchmark: \ct{10 tinyBenchmarks} using first the existing VMProfiler, and using then the accurate VMProfiler. 
-\figref{fig:ReportComparison} puts the two  profiling reports extracts side by side : the one on the left was before introducing the modified primitive, and the one on the right was once the new results were taken into account.
+\figref{fig:ReportComparison} puts the two profiling reports side by side: the one on the left was before introducing the modified primitive, and the one on the right was once the new results were taken into account.
 Among the jitted methods, \ct{Integer>>benchFib} was the one in which most of the execution time was spent (around 45\% of the total time).
 
-In the existing version of the profiler, one cannot identify where those 45\% of the total execution time are spent. In the accurate version, however, the method is decomposed in several bytecode ranges (in this case, 8) : one can then identify in which bytecode range(s) most of the time is spent. Here, 57,95\% that time is spent in the bytecode header. The next significant part of time is spent in the last bytecode instructions (12\% starting from bytecode pc 38).
+In the existing version of the profiler, one cannot identify where those 45\% of the total execution time are spent. In the accurate version, however, the method is decomposed in several bytecode ranges (in this case, 8): one can then identify in which bytecode range(s) most of the time is spent. Here, 57,95\% that time is spent in the bytecode header. The next significant part of time is spent in the last bytecode instructions (12\% starting from bytecode pc 38).
 
-In the \ct{Integer>>benchmark} function, most of the time is spent in the 74 -$>$ 78 bytecode range, referring to the following bytecode instructions : 
+In the \ct{Integer>>benchmark} function, most of the time is spent in the 74 -$>$ 78 bytecode range, referring to the following bytecode instructions: 
 \begin{itemize}
-	\item 74 $<$B0$>$ send: +
-	\item 75 $<$6B$>$ popIntoTemp: 3
-	\item 76 $<$13$>$ pushTemp: 3
-	\item 77 $<$10$>$ pushTemp: 0
+	\item \ct{74 <B0> send: +}
+	\item \ct{75 <6B> popIntoTemp: 3}
+	\item \ct{76 <13> pushTemp: 3}
+	\item \ct{77 <10> pushTemp: 0}
 	%\item 78 $<$B4$>$ send: $<$=
 \end{itemize}
 
 %: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 \section{Related Work}\seclabel{relatedWork}
 
-The field of execution profiling is vast and has receive a large attention from the research community. This section presents the different works related to the effort presented in this paper.
+The field of execution profiling is vast and has received a large attention from the research community. This section presents the different works related to the effort presented in this paper.
 
 \subsection{Standard Pharo profilers}
 
@@ -514,7 +514,7 @@ Both profilers essentially rely on the Smalltalk reflective API. Since most of t
 
 The Java Virtual Machine Tool Interface (JVM TI) is a native programming interface offered by the JVM to build dedicated profiling and debugging tools\footnote{\url{https://docs.oracle.com/javase/8/docs/platform/jvmti/jvmti.html}}. JVM TI provides both a way to inspect the state and to control the execution of Java applications. %JVM TI is a two-way interface
 
-A JVM TI client, defined as an \emph{agent}, can be notified of particular events emitted by the JVM. In total, a client may receive 31 different kinds of JVM events. These events covers breakpoints, class loading, garbage collection, method execution, monitor, and virtual machine start up and destruction.
+A JVM TI client, defined as an \emph{agent}, can be notified of particular events emitted by the JVM. In total, a client may receive 31 different kinds of JVM events. These events cover breakpoints, class loading, garbage collection, method execution, monitor, and virtual machine start up and destruction.
 
 JVisualVM\footnote{\url{https://visualvm.github.io}} is a visual profiling tool and framework. JVisualVM offers a large set of features, including remote debugging / profiling, thread analysis, heap snapshot, and garbage collection monitoring. 
 
@@ -549,9 +549,9 @@ In this paper, we have presented VMProfiler, a profiler enabling to identify whe
 As this kind of tool is typically used to know where to boost performance, the existing VMprofiler could be improved : it could not provide accurate profiling data for large native code functions. Indeed, it could report that most of the execution time was spent in a function, but not \textit{where} in this function the time was spent.
 This problem was getting significant as more and more optimisations were performed by the JIT ; inlining, especially, makes the jitted functions larger, and thus, harder to accurately profile.
 
-This paper describes a way to address this problem : an API used for debugging purposes offers a mapping between machine code pc and bytecode pc. This mapping can then be used to determine bytecode ranges in a large native code function, and thus identify how many samples are included in one or the other range.\\
+This paper describes a way to address this problem : an API used for debugging purposes offers a mapping between machine code pc and bytecode pc. This mapping can then be used to determine bytecode ranges in a large native code function, and thus identify how many samples are included in one or the other range. Now, VMProfiler can provide accurate profiling statistical reports. \\
 
-Now VMProfiler can provide accurate profiling statistical reports. Further improvements are currently being considered: 
+Further improvements are currently being considered: 
 \begin{itemize}
 	\item As for now, VMProfiler is only available headless in Pharo. A graphical user interface could be implemented to provide profiling data from another perspective.
 	\item Sometimes, customers in a Windows environment request profiling, yet the VMProfiler is currently available for Mac and Linux only. The VMProfiler could then be implemented for Windows to tackle this problem.
