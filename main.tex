@@ -323,7 +323,7 @@ During the runtime, part of the machine code zone is unused. When the machine co
 
 We use three keywords to identify different addresses in the machine code zone. \emph{CogCode} is the beginning of the machine code zone, before the trampolines and enilmoparts. \emph{CCFree} is the beginning of the unused part of the machine code zone. \emph{CCEnd} is the last address of the machine code zone before the linked list of young referrers.
 
-\paragraph{Implementation.} Implementation-wise, VMProfiler is a sampling profiler. When profiling is started, a separate high-priority OS thread is started and collects the instruction pointers of the VM OS thread in a large circular buffer at an approximate cadence of 1.4GHz. Once the profiling ends \ab{ends? Are we talking here about a sample?}, a primitive method is available to gather the samples from the VM into a Bitmap. To understand to which functions the samples correspond to, VMProfiler requests:
+\paragraph{Implementation.} Implementation-wise, VMProfiler is a sampling profiler. When profiling is started, a separate high-priority OS thread is started and collects the instruction pointers of the VM OS thread in a large circular buffer at an approximate cadence of 1.4GHz. Once the profiling ends (\ie once the profiled code has been executed), a primitive method is available to gather the samples from the VM into a Bitmap. To understand to which functions the samples correspond to, VMProfiler requests:
 \begin{itemize}
 	\item The symbol table of the VM executable and all external plugins.
 	\item A description of the native functions currently present in the machine code zone.
