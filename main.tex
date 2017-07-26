@@ -465,7 +465,7 @@ A new field in \ct{FunctionSymbol} has been added to take the results of the mod
 As shown in \figref{NewMapping}, this new field helps with identifying where the execution time is spent. For instance, we know that \ct{foobarbaz} starts at \ct{0x0000FF45}, and that the first mapped bytecode pc (26) is at \ct{0x0000FF47}: it means that the 12 samples within this address range will refer to the bytecode instructions between 1 and 26.
 The same applies for the other entries: the unique sample within the range \ct{0x0000FF47} and \ct{0x0000FF52} will refer to the bytecode instructions between 26 and 29. 
 
-In that case, 1932 samples were gathered in total and 20 were referring to \ct{foobarbaz}. Among these 20 samples, 12 were referring to foo's bytecode pc between 1 and 26. Therefore, 60\% of the time spent in \ct{foobarbaz} was spent between these bytecode pcs. \ins{say something about out of order execution / zero latency instructions?}
+In the \figref{NewMapping}, 1932 samples were gathered in total and 20 were referring to \ct{foobarbaz}. Among these 20 samples, 12 were referring to foo's bytecode pc between 1 and 26. Therefore, 60\% of the time spent in \ct{foobarbaz} was spent between these bytecode pcs. \ins{say something about out of order execution / zero latency instructions?}
 
 
  \begin{figure}[!htp]
@@ -503,7 +503,7 @@ In the \ct{Integer>>benchmark} function, most of the time is spent in the 74 -$>
 	\item \ct{77 <10> pushTemp: 0}
 	\item \ct{78 <B4> send: <=}
 \end{itemize}
-If one browses the next dozens of bytecode instructions, one can notice the \ct{90 <A3> jumpTo: 76} instruction indicates that there is a loop between the 76 and 90 bytecode instructions. Thus, we can assume that the time is mostly spent in the 76, 77 and 78 bytecode instructions.
+In the next bytecode instructions of the \ct{Integer>>benchmark} method, one can find the \ct{90 <A3> jumpTo: 76} instruction. It indicates that there is a loop between the 76 and 90 bytecode instructions. Thus, we can assume that the time is mostly spent in the 76, 77 and 78 bytecode instructions.
 
 %: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 \section{Related Work}\seclabel{relatedWork}
