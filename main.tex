@@ -156,7 +156,7 @@
 
 % constants
 % \newcommand{\Title}{Toward Reducing Waste of Expandable Collections: The Pharo Case}
-\newcommand{\Title}{A detailed? A bytecode level? VM profiler for the Cog VM}
+\newcommand{\Title}{A detailed VM profiler for the Cog VM}
 %\newcommand{\Title}{The Dark Side of Expandable Collections: The Pharo Case}
 \newcommand{\TitleShort}{\Title}
 %\newcommand{\Authors}{~~~~}
@@ -367,7 +367,7 @@ To be able to debug native functions as if they were executed as bytecode functi
  
 \subsection{Problem}
 
-The VM development team is currently working on the implementation of an optimising JIT for the Cog VM. These optimisations includes speculative inlining, as described in the work of H\"olzle and Ungar~\cite{Holz94a}, in a similar way to production VMs such as Java's hotspot VM (The hotspot VM is the default virtual machine for Java~\cite{Pale01a}) and Javascript's V8 engine (V8 is mostly used as the Javascript engine for Google Chrome and NodeJS.~\cite{V8}). The optimising JIT is designed as a bytecode functions to bytecode functions runtime optimising compiler, re-using the existing JIT as a back-end to generate native functions. In this context, optimised functions are present both in the form of bytecode functions and native functions, using the extended bytecode set described in the work of B\'era \etal~\cite{Bera14a}. When profiling optimised code for benchmarks such as the Games benchmark~\cite{GameBenchs}, VMProfiler now shows that all the time is spent in a single function (the function where the rest of the functions used by the benchmark are inlined). To improve performance and tune the optimising JIT, the VM development team requires more information about where the time is spent in optimised functions, for example, in which range of bytecodes the time is spent.
+The VM development team is currently working on the implementation of an optimising JIT for the Cog VM. These optimisations include speculative inlining, as described in the work of H\"olzle and Ungar~\cite{Holz94a}, in a similar way to production VMs such as Java's hotspot VM (The hotspot VM is the default virtual machine for Java~\cite{Pale01a}) and Javascript's V8 engine (V8 is mostly used as the Javascript engine for Google Chrome and NodeJS~\cite{V8}). The optimising JIT is designed as a bytecode functions to bytecode functions runtime optimising compiler, re-using the existing JIT as a back-end to generate native functions. In this context, optimised functions are present both in the form of bytecode functions and native functions, using the extended bytecode set described in the work of B\'era \etal~\cite{Bera14a}. When profiling optimised code for benchmarks such as the Games benchmark~\cite{GameBenchs}, VMProfiler now shows that all the time is spent in a single function (the function where the rest of the functions used by the benchmark are inlined). To improve performance and tune the optimising JIT, the VM development team requires more information about where the time is spent in optimised functions, for example, in which range of bytecodes the time is spent.
 
 \vspace{0.2cm}
 \paragraph{Problem statement.} \emph{How to provide detailed profiling information in large native functions profiled?}
